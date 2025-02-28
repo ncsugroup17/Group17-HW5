@@ -25,7 +25,7 @@ $(STOPPED) : $(CLEANED)
 
 # Step 3: Report frequency of words
 $(FREQS): $(STOPPED)
-	cat $< | gawk 'BEGIN {RS=""; FS="[ \n]+"} {for (i=1; i <= NF; i++) if ($i ~ /./) word[$i]++} END { for(w in word) print word[w], w}' | sort -nr > $@
+	cat $< | gawk -f YYY.awk | sort -nr > $@
 
 
 # Step 4: Extract Top 10 most frequent words
@@ -40,7 +40,7 @@ $(TABLE): $(CLEANED) $(TOP_WORDS)
 
 # Cleanup
 clean:
-	rm -f $(CLEANED) $(TOKENS) $(FREQS) $(TOP_WORDS) $(TABLE)
+	rm -f $(CLEANED) $(TOKENS) $(FREQS) $(TOP_WORDS) $(TABLE) $(STOPPED)
 
 
 step1:
